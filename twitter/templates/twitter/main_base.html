@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/twitter.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300&family=Oswald:wght@500;700&family=Roboto:wght@400;700&family=Pacifico&&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="{% static 'css/icons.css' %}" rel='stylesheet'>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="{% static 'js/script.js' %}"></script>
+    <title>{% block title %} {% endblock title %}</title>
+</head>
+<body>
+    <div class="page-wrapper">
+        <div class="header">
+            <a href="{% url 'dashboard' %}">
+                <div class="logo">
+                    <img src="{% static 'img/Twitter-int.png' %}" height="60" width="60">
+                </div>
+            </a>
+            <div class="user-info-wrapper">
+                <div class="user-info">
+                    <div class="user-name">{{ user.first_name }}</div>
+                    <div class="user-email">{{ user.email }}</div>
+                </div>
+                <div class="user-profile-icon">
+                    <img src="{% static 'img/user.png' %}" height="40" width="40">
+                </div>
+                <div class="logout">
+                <a href="{% url 'logout' %}"><i class="gg-log-out"></i></a>
+                </div>
+            </div>
+        </div>
+        {% block body %}
+        {% endblock body %}
+    </div>
+</body>
+</html>

@@ -1,0 +1,85 @@
+{% extends 'twitter/main_base.html' %}
+{% load static %}
+{% block title %}Dashboard{% endblock title %}
+{% block body %}
+    {% if form %}
+        <div class="integrations">
+            <div class="active-accounts">
+                <button class="social-accounts" disabled>
+                    {% if name == "No integrations set" %}
+                        {{ name }}
+                    {% else %}
+                        <i class="gg-twitter"></i>
+                        {{ name }}
+                    {% endif %}
+                </button>
+            </div>
+            <div class="integrations-bottom">
+                <a href="{% url 'integrations' %}">
+                    <button class="social-accounts">
+                        {% if name == "No integrations set" %}
+                            Add an Integration
+                        {% else %}
+                            Re-authorize
+                    {% endif %}
+                    </button>
+                </a>
+            </div>
+        </div>
+        <div class="main-area">
+            <nav class="nav-bar">
+                    <a class="nav-item active" href="#">Queue</a>
+                    <a class="nav-item" href="{% url 'history' %}">History</a>
+            </nav>
+            <div class="post-wrapper">
+                <form class="create-post" id="create-post" method="post" action="{% url 'dashboard' %}">
+                    {% csrf_token %}
+                    {{ form.content }}
+                    {% if form.errors %}
+                        {% for field in form %}
+                        <div class="alert">{{ field.errors | join:" " }}</div>
+                        {% endfor %}
+                    {% endif %}
+                    <div class="button-cover">
+                        <div class="count"></div>
+                        <button class="btn btn-create" type="submit">Add Post</button>
+                    </div>
+                </form>
+                {% if posts %}
+                <div class="pending-posts">
+                    <h3> Pending Posts </h3>
+                    {% for post in posts %}
+                    <div class="post-container">
+                        <textarea id={{ post.id }} form="create-post" rows="3" cols="30" maxlength="280" disabled>{{ post.content }}</textarea>
+                        <div class="button-cover">
+                            <a href="{% url 'edit_post' post.id %}">
+                                <button class="btn btn-edit">Edit</button>
+                            </a>
+                            <a href="{% url 'delete_post' post.id %}">
+                                <button class="btn btn-delete" type="submit" value="delete">
+                                    Delete
+                                </button>
+                            </a>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        <div class="sidebar"></div>
+        {% else %}
+        <div class="get-started-wrapper">
+            <div class="get-started-container">
+                <img src="{% static 'img/Twitter-logo.png' %}" width="400" height="400">
+                <div class="get-started">
+                    <a href="{% url 'integrations' %}">
+                        <button class="add-first-account">
+                            Connect your Twitter account
+                        </button>
+                    </a>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+{% endblock body %}

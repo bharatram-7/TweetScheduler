@@ -1,0 +1,164 @@
+html, body{
+    font-family: 'Roboto', sans-serif;
+    height: 100%;
+    width: 100%;
+    overflow-x: hidden;
+}
+
+*{
+    margin: 0;
+    padding: 0;
+}
+
+.container{
+    display: flex;
+    height: 100%;
+    width 100%;
+}
+
+.main{
+    width: calc(100%/3);
+    height: 100%;
+    min-height: auto;
+}
+
+.login-wrapper{
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    text-align: center;
+}
+
+.app-name{
+    width: 100%;
+    text-align: center;
+    padding: 16px 0;
+    margin: 16px 0px;
+    font-size: 2em;
+    font-weight: 700;
+    font-family: 'Oswald', sans-serif;
+}
+
+.login-form{
+    padding: 1em 2em;
+    width: 55%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-form h1{
+    width: 100%;
+    text-align: left;
+    font-family: 'Oswald', sans-serif;
+    font-weight: 500;
+}
+
+.login-form-filler{
+    height: 1em;
+}
+
+.login-form label{
+    color: black;
+    font-weight: 400;
+    font-size: 0.9em;
+    text-align: left;
+    width: 100%;
+    margin-top: 1em;
+}
+
+.text-input, #id_username, #id_password{
+    display: block;
+    width: 100%;
+    height: 3.5em;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+    border: 1px solid #B8B8B8;
+    border-radius: 5px;
+    padding: 0 16px;
+    box-sizing: border-box;
+}
+
+.alert{
+    width: 100%;
+    color: red;
+    font-size: 0.9em;
+    text-align: left;
+}
+
+.btn{
+    cursor: pointer;
+    width: 100%;
+    background-color: #5f19dd;
+    color: white;
+    font-weight: 700;
+    margin: 0.5em 0;
+    border: 0;
+    border-radius: 5px;
+    height: 3.5em;
+    padding: 0 16px;
+}
+
+.btn:hover{
+    background: #451F8F;
+}
+
+.links.register{
+    display: flex;
+    justify-content: flex-end;
+}
+
+.links{
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.8em;
+    width: 100%;
+}
+
+.links a{
+    color: black;
+    font-weight: 400;
+    text-decoration: none;
+    transition: font-weight 10ms ease-in;
+}
+
+a:hover{
+    font-weight: 600;
+}
+
+.footer{
+    padding: 2em;
+    margin: 2em;
+}
+
+.sidebar{
+    width: calc(2*(100%/3));
+    background-color: #191c28;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-family: 'Pacifico', cursive;
+}
+
+.sidebar h1{
+    font-size: 2.5em;
+}
+
+.author{
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.author-in{
+    padding-right:40px;
+    padding-top: 1.5em;
+    font-size: 1.2em;
+}

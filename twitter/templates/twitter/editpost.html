@@ -1,0 +1,52 @@
+{% extends 'twitter/main_base.html' %}
+{% block title %}Edit{% endblock title %}
+{% block body %}
+<div class="integrations">
+    <div class="active-accounts">
+        <button class="social-accounts" disabled>
+            {% if name == "No integrations set" %}
+                {{ name }}
+            {% else %}
+                <i class="gg-twitter"></i>
+                {{ name }}
+            {% endif %}
+        </button>
+    </div>
+    <div class="integrations-bottom">
+        <a href="{% url 'integrations' %}">
+            <button class="social-accounts">
+                {% if name == "No integrations set" %}
+                    Add an Integration
+                {% else %}
+                    Re-authorize
+            {% endif %}
+            </button>
+        </a>
+    </div>
+</div>
+<div class="main-area">
+    <nav class="nav-bar">
+            <a class="nav-item active" href="#">Edit</a>
+    </nav>
+    <div class="post-wrapper">
+        <form class="create-post" id="edit-post" method="post" action="">
+            {% csrf_token %}
+            {{ form.content }}
+            {% if form.errors %}
+                {% for field in form %}
+                <div class="alert">{{ field.errors | join:" " }}</div>
+                {% endfor %}
+            {% endif %}
+            <div class="button-cover">
+                <div class="count"></div>
+                <div>
+                    <button class="btn btn-edit" type="submit">Save</button>
+                    <a href="{% url 'dashboard' %}">
+                        <button type="button" class="btn btn-edit">Cancel</button>
+                    </a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock body %}

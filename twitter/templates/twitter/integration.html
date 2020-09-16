@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Integration
+{% endblock %}
+
+{% block body %}
+<h1> Got the request token {{ request_token }}</h1>
+<h2> Click on the button below to be redirected to Twitter for Authorization</h2>
+<a href="{{ redirect_url }}"><button type="button" class="btn btn-lg btn-primary">Go to Twitter</button></a>
+{% endblock body %}

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        {% load static %}
+        <title>{% block title %}{% endblock title %}</title>
+        <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300&family=Oswald:wght@500;700&family=Roboto:wght@400;700&family=Pacifico&&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="{% static 'css/accounts.css' %}">
+    </head>
+    <body>
+        <div class="container">
+            <div class="main">
+                <div class="login-wrapper">
+                    <div class="app-name">Tweets Scheduler</div>
+                                {% block body %}
+                                {% endblock body %}
+                    <div class="footer">Terms & Conditions</div>
+                </div>
+            </div>
+            <div class="sidebar">
+                {% block sidebar %}
+                {% endblock sidebar %}
+            </div>
+        </div>
+    </body>
+</html>

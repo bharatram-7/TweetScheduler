@@ -1,0 +1,303 @@
+html, body{
+    font-family: 'Roboto', sans-serif;
+    height: 100%;
+    width: 100%;
+    overflow-x: hidden;
+}
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.page-wrapper{
+    height: 100%;
+    width: 100%;
+    display: grid;
+    grid: "header header" 60px
+          "integrations main-area" calc(100% - 60px)
+          / 260px 6fr;
+}
+
+.header{
+    grid-area: header;
+    display: flex;
+    justify-content: space-between;
+    background: #191c28;
+}
+
+.logo{
+    display: flex;
+    padding: 0 15px;
+    justify-content: center;
+    align-items: center;
+}
+
+.user-info-wrapper{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.user-info{
+    display: flex;
+    flex-direction: column;
+    text-align: right;
+    color: white;
+}
+
+.user-name{
+    color: #555;
+}
+
+.user-email, .user-name{
+    padding: 0 10px;
+}
+
+.user-profile-icon{
+    box-sizing: border-box;
+    padding-right: 10px;
+    margin-right: 5px;
+    border-right: 1px solid #ddd;
+}
+
+.logout{
+    padding-left: 10px;
+    padding-right: 8px;
+    margin: 5px 8px;
+}
+
+.integrations{
+    grid-area: integrations;
+    background: #ddd;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.integrations-bottom, .active-accounts{
+    width: 100%;
+    text-align: center;
+}
+
+.integrations a{
+    width: 100%;
+    text-align: center;
+}
+
+.active-accounts{
+    display: flex;
+    justify-content: center;
+}
+
+.active-accounts button{
+    cursor: default;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background: #5f19dd;
+    color: white;
+    border: 0;
+    border-radius: 5px;
+    padding: 1em;
+}
+
+.social-accounts{
+    width: 90%;
+    cursor: pointer;
+    padding: 1em;
+    margin-top: 14px;
+    margin-bottom: 14px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background: #5f19dd;
+    color: #fff;
+}
+
+.social-accounts:hover{
+    background: #451F8F;
+}
+
+.main-area{
+    grid-area: main-area;
+    background: #eee;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.nav-bar{
+    height: 60px;
+    width: 100%;
+    background: #fff;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    text-align: center;
+}
+
+.nav-item{
+    padding: 21px 18px;
+    margin: 0px 10px;
+    text-align: center;
+    text-decoration: none;
+    color: black;
+}
+
+.nav-item:hover{
+    opacity: 0.7;
+}
+
+.nav-item.active{
+    border-bottom: 2px solid blue;
+}
+
+.post-wrapper{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 2px 16px 16px 16px;
+    margin: 1rem 0 0 0;
+    overflow-y: auto;
+}
+
+.create-post{
+    display: flex;
+    flex-direction: column;
+
+}
+
+textarea{
+    resize: none;
+    padding: 14px;
+    width: 50%;
+    border-radius: 5px;
+    border: 1px solid #fff;
+    font-weight: 500;
+}
+
+textarea:disabled{
+    color: black;
+}
+
+.alert{
+    width: 100%;
+    color: red;
+    font-size: 0.9em;
+    text-align: left;
+    padding-top: 10px;
+}
+
+.button-cover{
+    width: 50%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 10px 0;
+}
+
+.btn-create{
+    cursor: pointer;
+    padding: 8px 10px;
+    width: 15%;
+    background: #5f19dd;
+    border: 0;
+    color: white;
+    border-radius: 5px;
+}
+
+.btn:hover{
+    background: #451F8F;
+}
+
+.create-post::after{
+    content: "";
+    opacity: 0.1;
+    width: 50%;
+    border: 1px solid #222;
+}
+
+.pending-posts h3{
+   margin-top: 0.6em;
+}
+
+.post-container{
+    margin: 1rem 0;
+}
+
+textarea:disabled{
+    background: #fff;
+}
+
+.btn-edit, .btn-delete{
+    cursor: pointer;
+    color: white;
+    background: #5f19dd;
+    border: 0;
+    border-radius: 5px;
+    padding: 8px 10px;
+}
+
+.get-started-wrapper{
+    grid-area: main-area;
+    display: grid;
+    grid: "main ." 100%
+        / calc(100% - 260px)
+}
+
+.get-started-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.get-started{
+    margin-bottom: 40px;
+}
+
+.add-first-account{
+    cursor: pointer;
+    border: 0;
+    border-radius: 20px;
+    padding: 5px 10px;
+    color: #eee;
+    background: #21A8DF;
+    font-size: 1.3em;
+}
+
+.add-first-account:hover{
+    opacity: 0.8;
+}
+
+table{
+    border-collapse: collapse;
+    width: 70%;
+    counter-reset: Serial;
+}
+
+table, th, td{
+    border-bottom: 1px solid #aaa;
+    border-radius: 5px;
+    text-align: center;
+}
+
+th, td{
+    padding: 10px;
+}
+
+tr td:first-child:before{
+    counter-increment: Serial;
+    content: counter(Serial);
+}
+
+tr th:first-child{
+    width: 10%;
+}
+
+tr th:nth-child(2){
+    width: 70%;
+}

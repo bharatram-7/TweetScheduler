@@ -1,0 +1,35 @@
+{% extends 'registration/accounts_base.html' %}
+
+{% block title %}
+Signup
+{% endblock title %}
+
+{% block body %}
+{% if form.errors %}
+    {% for error in form.non_field_errors %}
+        <div class="alert">{{ error|escape }}</div>
+    {% endfor %}
+{% endif %}
+
+<form class="login-form" method="post" action="{% url 'signup' %}">
+        {% csrf_token %}
+        <h1> Sign Up</h1>
+        <div class="login-form-filler"></div>
+        {% for field in form %}
+            <label for="{{ field.id_for_label }}">{{ field.field.widget.attrs.label }}</label>
+            {{ field }}
+            <div class="alert">{{ field.errors | join:" " }}</div>
+        {% endfor %}
+        <button type="submit" class="btn btn-login" value="Signup">Sign Up</button>
+        <div class="links register">
+            <a href="{% url 'login' %}">Already have an account?</a>
+        </div>
+</form>
+{% endblock body %}
+
+{% block sidebar %}
+<h1>“Time is what we want most, but what we use worst.”</h1>
+<div class="author">
+    <div class="author-in"> - William Penn</div>
+</div>
+{% endblock sidebar %}

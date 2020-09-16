@@ -1,0 +1,32 @@
+{% extends 'registration/accounts_base.html' %}
+
+{% block title %}
+Login!
+{% endblock title %}
+
+{% block body %}
+    <form class="login-form" method="post" action="{% url 'login' %}" autocomplete="off">
+        {% csrf_token %}
+        <h1> Log in</h1>
+        <div class="login-form-filler"></div>
+        <label for="id_username">Email Address</label>
+        <input type="text" name="username" class="login-input" maxlength="254" required="" id="id_username">
+        <label for="id_password">Password</label>
+        <input type="password" name="password" class="login-input" required="" id="id_password">
+        {% if form.errors %}
+            <div class="alert">Please check your email/password combination.</div>
+        {% endif %}
+        <button type="submit" class="btn btn-login" value="Login">Login</button>
+        <div class="links">
+            <a href="{% url 'signup' %}">Create an account</a>
+            <a href="{% url 'forgot_password' %}">Forgot Password?</a>
+        </div>
+    </form>
+{% endblock %}
+
+{% block sidebar %}
+<h1>“Every minute you spend in planning saves 10 minutes in execution; this gives you a 1,000 percent return on energy!”</h1>
+<div class="author">
+    <div class="author-in"> - Brian Tracy, author and motivational speaker</div>
+</div>
+{% endblock sidebar %}
