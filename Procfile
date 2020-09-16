@@ -1,2 +1,2 @@
 web: gunicorn Scheduler.wsgi
-cron: python cron.py
+cron: python twitter/cron.py
