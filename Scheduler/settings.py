@@ -145,4 +145,4 @@ EMAIL_FILE_PATH = os.path.join(BASE_DIR, "sent_emails")
 
 LOGOUT_REDIRECT_URL = reverse_lazy('login')
 
-django_herolu.settings(locals())
+django_heroku.settings(locals())
