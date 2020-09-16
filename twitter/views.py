@@ -16,6 +16,10 @@ api_key = os.environ["api_key"]
 api_key_secret = os.environ["api_secret"]
 
 
+def home(request):
+    return redirect(reverse('dashboard'))
+
+
 def signup(request):
     form = CreateUserForm(request.POST or None)
     if form.is_valid():
