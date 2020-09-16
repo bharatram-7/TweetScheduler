@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
+import django_heroku
 from django.urls import reverse_lazy
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -144,3 +145,4 @@ EMAIL_FILE_PATH = os.path.join(BASE_DIR, "sent_emails")
 
 LOGOUT_REDIRECT_URL = reverse_lazy('login')
 
+django_herolu.settings(locals())
