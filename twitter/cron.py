@@ -1,4 +1,4 @@
-from .models import Integration, Post, History
+from models import Integration, Post, History
 from requests_oauthlib import OAuth1
 import requests
 import os
