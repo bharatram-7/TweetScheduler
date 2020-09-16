@@ -11,7 +11,7 @@ import os
 request_token_url = 'https://api.twitter.com/oauth/request_token'
 authorize_url = 'https://api.twitter.com/oauth/authorize'
 access_token_url = 'https://api.twitter.com/oauth/access_token'
-callback_uri = 'http://127.0.0.1:8000/twitter/'
+callback_uri = 'https://tweetscheduler.herokuapp.com/twitter/'
 api_key = os.environ["api_key"]
 api_key_secret = os.environ["api_secret"]
 
