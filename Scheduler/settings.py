@@ -25,7 +25,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = os.environ['django_secret']
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
@@ -149,3 +149,5 @@ EMAIL_FILE_PATH = os.path.join(BASE_DIR, "sent_emails")
 LOGOUT_REDIRECT_URL = reverse_lazy('login')
 
 django_heroku.settings(locals())
+
+DEBUG_PROPAGATE_EXCEPTIONS = True
