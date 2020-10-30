@@ -3,6 +3,8 @@
 {% block title %}Dashboard{% endblock title %}
 {% block body %}
     {% if form %}
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/axios@0.12.0/dist/axios.min.js"></script>
         <div class="integrations">
             <div class="active-accounts">
                 <button class="social-accounts" disabled>
@@ -31,38 +33,36 @@
                     <a class="nav-item active" href="#">Queue</a>
                     <a class="nav-item" href="{% url 'history' %}">History</a>
             </nav>
-            <div class="post-wrapper">
+            <div class="post-wrapper" id="app">
                 <form class="create-post" id="create-post" method="post" action="{% url 'dashboard' %}">
                     {% csrf_token %}
-                    {{ form.content }}
+                    <textarea v-model="createData" name="content" cols="30" rows="3" maxlength="280" required="required" id="id_content"></textarea>
                     {% if form.errors %}
                         {% for field in form %}
                         <div class="alert">{{ field.errors | join:" " }}</div>
                         {% endfor %}
                     {% endif %}
                     <div class="button-cover">
-                        <div class="count"></div>
-                        <button class="btn btn-create" type="submit">Add Post</button>
+                        <div class="count">Remaining: [[ characterCount ]]</div>
+                        <button v-on:click.prevent="createPost" class="btn btn-create" type="submit">Add Post</button>
                     </div>
                 </form>
                 {% if posts %}
                 <div class="pending-posts">
                     <h3> Pending Posts </h3>
-                    {% for post in posts %}
-                    <div class="post-container">
-                        <textarea id={{ post.id }} form="create-post" rows="3" cols="30" maxlength="280" disabled>{{ post.content }}</textarea>
+                    <div class="post-container" v-for="tweet in tweets">
+                        <textarea :id=tweet.id form="create-post" rows="3" cols="30" maxlength="280" disabled>[[ tweet.content ]]</textarea>
                         <div class="button-cover">
-                            <a href="{% url 'edit_post' post.id %}">
+                            <a v-bind:href=" regUrl + 'posts/' + tweet.id + '/edit/'">
                                 <button class="btn btn-edit">Edit</button>
                             </a>
-                            <a href="{% url 'delete_post' post.id %}">
-                                <button class="btn btn-delete" type="submit" value="delete">
+                            <!-- <a v-bind:href="baseUrl + '/' + tweet.id"> -->
+                                <button v-on:click.prevent="deletePost(tweet.id)" class="btn btn-delete" type="submit" value="delete">
                                     Delete
                                 </button>
-                            </a>
+                            <!-- </a> -->
                         </div>
                     </div>
-                    {% endfor %}
                 </div>
                 {% endif %}
             </div>
@@ -82,4 +82,71 @@
             </div>
         </div>
     {% endif %}
+    <script>
+        var app = new Vue({
+            delimiters: ['[[',']]'],
+            el: '#app',
+            data: {
+                tweets: [],
+                createData: "",
+                baseUrl: 'http://127.0.0.1:8000/api/v1/posts',
+                regUrl: 'http://127.0.0.1:8000/'
+            },
+            mounted: function() {
+                axios.get('http://127.0.0.1:8000/api/v1/posts')
+                .then(response => (this.tweets = response.data))
+                .catch(function(error){
+                    console.log(error)
+                })
+            },
+            methods: {
+                getPosts: function(){
+                    axios.get('http://127.0.0.1:8000/api/v1/posts')
+                    .then(response => (this.tweets = response.data))
+                    .catch(function(error){
+                    console.log(error)
+                })
+                },
+                createPost: function(){
+                    axios.defaults.xsrfCookieName = 'csrftoken';
+                    axios.defaults.xsrfHeaderName = 'X-CSRFToken';
+                    axios.post("{% url 'post_list_view' %}", {
+                        "content": this.createData
+                    }).then(response => {
+                        this.getPosts()
+                        // this.tweets.push(response.data)
+                        this.createData = " ";
+                        console.log("success");
+                    }).catch(err => {
+                        console.log(err);
+                    });
+                    // event.target.reset();
+                },
+                deletePost: function(id){
+                    if(confirm("Do you want to delete this post?")){
+                        axios.defaults.xsrfCookieName = 'csrftoken';
+                        axios.defaults.xsrfHeaderName = 'X-CSRFToken';
+                        axios.delete(this.baseUrl + "/" + id
+                        ).then(response => {
+                            console.log(response);
+                            this.getPosts();
+                        }).catch(err => {
+                            console.log(err);
+                        })
+                    }
+                }
+            },
+            computed: {
+                characterCount: function(){
+                    var clen = this.createData.length;
+                    if(clen < 280){
+                        return (280 - clen);
+                    }
+                    else{
+                        return 0;
+                    }
+                }
+            }
+        });
+    </script>
 {% endblock body %}

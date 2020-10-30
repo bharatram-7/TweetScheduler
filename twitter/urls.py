@@ -27,4 +27,7 @@ urlpatterns = [
     path('accounts/logout/', auth_views.LogoutView.as_view(), name='logout'),
     path('integrations/', views.integration, name="integrations"),
     path('twitter/', views.twitter, name='twitter'),
+    path('api/v1/posts', views.PostList.as_view(), name='post_list_view'),
+    path('api/v1/posts/<int:pk>', views.PostDetail.as_view(), name='post_detail_view'),
+    path('api/v1/history', views.HistoryList.as_view(), name='history_list_view'),
 ]

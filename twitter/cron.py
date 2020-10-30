@@ -2,8 +2,6 @@ from .models import Integration, Post, History
 from requests_oauthlib import OAuth1
 import requests
 import os
-from apscheduler.schedulers.background import BackgroundScheduler
-scheduler = BackgroundScheduler(daemon=True)
 
 api_key = os.environ["api_key"]
 api_secret = os.environ["api_secret"]
@@ -40,7 +38,3 @@ def fetch_records():
         print("Greater than 1")
         for post in posts:
             post_to_twitter(post)
-
-
-scheduler.add_job(fetch_records, 'cron', minute='*')
-scheduler.start()

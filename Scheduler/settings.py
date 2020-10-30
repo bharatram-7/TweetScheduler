@@ -25,7 +25,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = os.environ['django_secret']
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'twitter.apps.TwitterConfig',
     'django_crontab',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
@@ -130,8 +131,10 @@ AUTH_USER_MODEL = 'twitter.CustomUser'
 LOGIN_REDIRECT_URL = '/dashboard/'
 
 CRONJOBS = [
-    ('* * * * *', 'twitter.cron.fetch_records', '>> /tmp/pycharm_crontab.log 2>&1')
+    ('0 */4 * * *', 'twitter.cron.fetch_records', '>> /tmp/pycharm_crontab.log 2>&1')
 ]
+
+CRONTAB_COMMAND_PREFIX = ''
 
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 EMAIL_HOST = 'smtp.gmail.com'

@@ -1,12 +1,14 @@
+import os
+from requests_oauthlib import OAuth1Session
 from django.shortcuts import render, redirect, reverse
+from django.shortcuts import render, get_object_or_404
+from django.contrib.auth.decorators import login_required
+from django.http import HttpResponse
+from rest_framework import generics, permissions
 from .models import *
 from .forms import CreateUserForm, PostForm
-from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, get_object_or_404
-from requests_oauthlib import OAuth1Session
-from django.http import HttpResponse
-import os
-# Create your views here.
+from .serializer import PostSerializer, HistorySerializer
+
 
 request_token_url = 'https://api.twitter.com/oauth/request_token'
 authorize_url = 'https://api.twitter.com/oauth/authorize'
@@ -57,6 +59,17 @@ def dashboard(request):
     return render(request, 'twitter/dashboard.html', context=context)
 
 
+class PostList(generics.ListCreateAPIView):
+    serializer_class = PostSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
+
+    def get_queryset(self):
+        return Post.objects.filter(user=self.request.user)
+
+
 @login_required
 def editpost(request, post_id):
     profile_info = Integration.objects.filter(user=request.user)
@@ -72,7 +85,8 @@ def editpost(request, post_id):
             context = {
                 "name": profile_info[0].profile_name,
                 "content": post.content,
-                "form": form
+                "form": form,
+                "id": post_id
             }
             return render(request, 'twitter/editpost.html', context=context)
         else:
@@ -88,12 +102,28 @@ def deletepost(request, post_id):
     return redirect(reverse('dashboard'))
 
 
+class PostDetail(generics.RetrieveUpdateDestroyAPIView):
+    serializer_class = PostSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        return Post.objects.filter(user=self.request.user)
+
+
 @login_required
 def history(request):
     posts = History.objects.filter(user=request.user)
     profile_info = Integration.objects.filter(user=request.user).first()
     context = {"posts": posts, "name": profile_info.profile_name}
     return render(request, 'twitter/history.html', context=context)
+
+
+class HistoryList(generics.ListAPIView):
+    serializer_class = HistorySerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        return History.objects.filter(user=self.request.user)
 
 
 @login_required()
