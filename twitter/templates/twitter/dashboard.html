@@ -105,9 +105,9 @@
                         "content": this.createData
                     }).then(response => {
                         this.getPosts()
-                        // this.tweets.push(response.data)
                         this.createData = "";
                         console.log("success");
+                        alert("Successfully Created!");
                     }).catch((err) => {
                         alert(err.status + ": " + err.data.content);
                     });

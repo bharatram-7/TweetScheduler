@@ -131,7 +131,7 @@ AUTH_USER_MODEL = 'twitter.CustomUser'
 LOGIN_REDIRECT_URL = '/dashboard/'
 
 CRONJOBS = [
-    ('0 */4 * * *', 'twitter.cron.fetch_records', '>> /tmp/pycharm_crontab.log 2>&1')
+    ('* */4 * * *', 'twitter.cron.fetch_records', '>> /tmp/pycharm_crontab.log 2>&1')
 ]
 
 CRONTAB_COMMAND_PREFIX = ''
