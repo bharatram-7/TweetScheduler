@@ -9,7 +9,8 @@ urlpatterns = [
     path('dashboard/', views.dashboard, name='dashboard'),
     path('dashboard/history', views.history, name='history'),
     path('accounts/login/', auth_views.LoginView.as_view(template_name="registration/login.html",
-                                                         authentication_form=UserLoginForm), name='login'),
+                                                         authentication_form=UserLoginForm,
+                                                         redirect_authenticated_user=True), name='login'),
     path('accounts/signup/', views.signup, name='signup'),
     path('accounts/forgot_password/', auth_views.PasswordResetView.as_view(
         template_name="registration/forgot_password.html", success_url=reverse_lazy('forgot_password_success'),

@@ -199,6 +199,16 @@ textarea:disabled{
     margin: 10px 0;
 }
 
+.btn-create:disabled{
+    cursor: default;
+    background: #888;
+}
+
+.btn-create:disabled:hover{
+    cursor: default;
+    background: #888;
+}
+
 .btn-create{
     cursor: pointer;
     padding: 8px 10px;

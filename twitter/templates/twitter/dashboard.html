@@ -3,8 +3,6 @@
 {% block title %}Dashboard{% endblock title %}
 {% block body %}
     {% if form %}
-        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/axios@0.12.0/dist/axios.min.js"></script>
         <div class="integrations">
             <div class="active-accounts">
                 <button class="social-accounts" disabled>
@@ -36,19 +34,14 @@
             <div class="post-wrapper" id="app">
                 <form class="create-post" id="create-post" method="post" action="{% url 'dashboard' %}">
                     {% csrf_token %}
-                    <textarea v-model="createData" name="content" cols="30" rows="3" maxlength="280" required="required" id="id_content"></textarea>
-                    {% if form.errors %}
-                        {% for field in form %}
-                        <div class="alert">{{ field.errors | join:" " }}</div>
-                        {% endfor %}
-                    {% endif %}
+                    <textarea v-model="createData" name="content" cols="30" rows="3" maxlength="280" required="required"
+                              id="id_content" placeholder="What's on your mind?"></textarea>
                     <div class="button-cover">
                         <div class="count">Remaining: [[ characterCount ]]</div>
-                        <button v-on:click.prevent="createPost" class="btn btn-create" type="submit">Add Post</button>
+                        <button v-on:click.prevent="createPost" :disabled="checkContent" class="btn btn-create" type="submit">Add Post</button>
                     </div>
                 </form>
-                {% if posts %}
-                <div class="pending-posts">
+                <div class="pending-posts" v-if="tweets.length != 0">
                     <h3> Pending Posts </h3>
                     <div class="post-container" v-for="tweet in tweets">
                         <textarea :id=tweet.id form="create-post" rows="3" cols="30" maxlength="280" disabled>[[ tweet.content ]]</textarea>
@@ -64,11 +57,10 @@
                         </div>
                     </div>
                 </div>
-                {% endif %}
             </div>
         </div>
         <div class="sidebar"></div>
-        {% else %}
+    {% else %}
         <div class="get-started-wrapper">
             <div class="get-started-container">
                 <img src="{% static 'img/Twitter-logo.png' %}" width="400" height="400">
@@ -89,11 +81,10 @@
             data: {
                 tweets: [],
                 createData: "",
-                baseUrl: 'https://tweetscheduler.herokuapp.com/api/v1/posts',
-                regUrl: 'https://tweetscheduler.herokuapp.com/'
+                regUrl: 'https://tweetscheduler.herokuapp.com/',
             },
             mounted: function() {
-                axios.get('https://tweetscheduler.herokuapp.com/api/v1/posts')
+                axios.get("{% url 'post_list_view' %}")
                 .then(response => (this.tweets = response.data))
                 .catch(function(error){
                     console.log(error)
@@ -101,10 +92,10 @@
             },
             methods: {
                 getPosts: function(){
-                    axios.get('https://tweetscheduler.herokuapp.com/api/v1/posts')
+                    axios.get("{% url 'post_list_view' %}")
                     .then(response => (this.tweets = response.data))
                     .catch(function(error){
-                    console.log(error)
+                        alert(error.status + ": " + error.data.content);
                 })
                 },
                 createPost: function(){
@@ -115,23 +106,22 @@
                     }).then(response => {
                         this.getPosts()
                         // this.tweets.push(response.data)
-                        this.createData = " ";
+                        this.createData = "";
                         console.log("success");
-                    }).catch(err => {
-                        console.log(err);
+                    }).catch((err) => {
+                        alert(err.status + ": " + err.data.content);
                     });
-                    // event.target.reset();
                 },
                 deletePost: function(id){
                     if(confirm("Do you want to delete this post?")){
                         axios.defaults.xsrfCookieName = 'csrftoken';
                         axios.defaults.xsrfHeaderName = 'X-CSRFToken';
-                        axios.delete(this.baseUrl + "/" + id
+                        axios.delete("{% url 'post_list_view' %}" + "/" + id
                         ).then(response => {
                             console.log(response);
                             this.getPosts();
-                        }).catch(err => {
-                            console.log(err);
+                        }).catch((err) => {
+                            alert(err.status + ": " + err.data.content);
                         })
                     }
                 }
@@ -144,6 +134,14 @@
                     }
                     else{
                         return 0;
+                    }
+                },
+                checkContent: function(){
+                    console.log(this.createData.length);
+                    if (this.createData.length == 0){
+                        return true;
+                    }else{
+                        return false;
                     }
                 }
             }

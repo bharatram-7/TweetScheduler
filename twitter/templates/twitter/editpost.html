@@ -2,8 +2,6 @@
 {% load static %}
 {% block title %}Edit{% endblock title %}
 {% block body %}
-<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/axios@0.12.0/dist/axios.min.js"></script>
 <div class="integrations">
     <div class="active-accounts">
         <button class="social-accounts" disabled>
@@ -34,14 +32,8 @@
     <div class="post-wrapper" id="app">
         <form class="create-post" id="edit-post" method="post" action="">
             {% csrf_token %}
-            <textarea v-model="editData" name="content" cols="30" rows="3" maxlength="280" required="required" id="id_content">
-                {{ form.content.value }}
-            </textarea>
-            {% if form.errors %}
-                {% for field in form %}
-                <div class="alert">{{ field.errors | join:" " }}</div>
-                {% endfor %}
-            {% endif %}
+            <textarea v-model="editData" name="content" cols="30" rows="3" maxlength="280"
+                      required="required" id="id_content"></textarea>
             <div class="button-cover">
                 <div class="count">Remaining: [[ characterCount ]]</div>
                 <div>
@@ -60,7 +52,7 @@
         el: '#app',
         data: {
             editData: '{{ form.content.value }}',
-            putUrl: 'https://tweetscheduler.herokuapp.com/api/v1/posts/' + '{{ id }}'
+            putUrl: '{% url "post_list_view" %}' + '/' + '{{ id }}'
         },
         methods: {
             editPost: function(){
@@ -72,8 +64,9 @@
                     console.log(response);
                     window.location = '/dashboard';
                     // alert("Success");
-                }).catch(err => {
+                }).catch((err) => {
                     console.log(err);
+                    alert(err.status + ": " + err.data.content);
                 });
             }
         },
